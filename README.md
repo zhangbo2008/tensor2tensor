@@ -12,6 +12,9 @@ Workaround that worked for me: $ pip3 install 'gast==0.2.2'.
 
 
 
+windows环境运行datagen 下载的内容在C盘根目录的tst里面!
+
+
 
 
 
