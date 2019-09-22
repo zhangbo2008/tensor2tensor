@@ -177,7 +177,7 @@ def compile_data(tmp_dir, datasets, filename, datatypes_to_clean=None):
         url = dataset[0]
         compressed_filename = os.path.basename(url)
         compressed_filepath = os.path.join(tmp_dir, compressed_filename)
-        if url.startswith("http"):
+        if url.startswith("http"):#下一行进行下载
           generator_utils.maybe_download(tmp_dir, compressed_filename, url)
         if compressed_filename.endswith(".zip"):
           zipfile.ZipFile(os.path.join(compressed_filepath),

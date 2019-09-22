@@ -4,9 +4,11 @@ google transform这个怎么写论文.
 
 
 
+Module 'gast' has no attribute 'Num' #32319
+解决方法:
+@mgreenbe thank you for filing the bug, and @tocosastalo thanks for the info.
 
-
-
+Workaround that worked for me: $ pip3 install 'gast==0.2.2'.
 
 
 
