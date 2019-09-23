@@ -40,17 +40,31 @@
 
 # In[ ]:
 
+
+
+
 ##
 import tensorflow as tf
 import os
 
-DATA_DIR = os.path.expanduser("/t2t/data") # This folder contain the data
-TMP_DIR = os.path.expanduser("/t2t/tmp")
-TRAIN_DIR = os.path.expanduser("/t2t/train") # This folder contain the model
-EXPORT_DIR = os.path.expanduser("/t2t/export") # This folder contain the exported model for production
-TRANSLATIONS_DIR = os.path.expanduser("/t2t/translation") # This folder contain  all translated sequence
-EVENT_DIR = os.path.expanduser("/t2t/event") # Test the BLEU score
-USR_DIR = os.path.expanduser("/t2t/user") # This folder contains our data that we want to add
+os.environ['HOME']='/data'
+print(os.environ)#下面路径都加~即可,表示都在/data目录中操作了!!!!!!!!!
+DATA_DIR = os.path.expanduser("~/t2t/data") # This folder contain the data
+print(DATA_DIR)
+
+
+
+
+
+
+
+DATA_DIR = os.path.expanduser("~/t2t/data") # This folder contain the data
+TMP_DIR = os.path.expanduser("~/t2t/tmp")
+TRAIN_DIR = os.path.expanduser("~/t2t/train") # This folder contain the model
+EXPORT_DIR = os.path.expanduser("~/t2t/export") # This folder contain the exported model for production
+TRANSLATIONS_DIR = os.path.expanduser("~/t2t/translation") # This folder contain  all translated sequence
+EVENT_DIR = os.path.expanduser("~/t2t/event") # Test the BLEU score
+USR_DIR = os.path.expanduser("~/t2t/user") # This folder contains our data that we want to add
  
 tf.gfile.MakeDirs(DATA_DIR)
 tf.gfile.MakeDirs(TMP_DIR)
@@ -70,9 +84,10 @@ tf.gfile.MakeDirs(USR_DIR)
 # In[ ]:
 
 
-PROBLEM = "translate_enfr_wmt32k" # We chose a problem translation English to French with 32.768 vocabulary
+# PROBLEM = "translate_enzh_wmt32k" # We chose a problem translation English to French with 32.768 vocabulary
+PROBLEM = "translate_enzh_wmt8k" # We chose a problem translation English to French with 32.768 vocabulary
 MODEL = "transformer" # Our model
-HPARAMS = "transformer_big" # Hyperparameters for the model by default 
+HPARAMS = "transformer_big_single_gpu" # Hyperparameters for the model by default
                             # If you have a one gpu, use transformer_big_single_gpu
 
 
@@ -88,32 +103,6 @@ problems.available() #Show all problems
 registry.list_models() #Show all registered models
 print(problems.available())
 #or
-##
-#Command line
-# get_ipython().system('t2t-trainer --registry_help #Show all problems')
-# get_ipython().system('t2t-trainer --problems_help #Show all models')
-
-
-# # 2. Data generation 
-# 
-# Generate the data (download the dataset and generate the data).
-# 
-# ---
-# 
-#  You can choose between command line or code.
-
-# ## 2.1. Generate with terminal
-# For more information: https://github.com/tensorflow/tensor2tensor/blob/master/tensor2tensor/bin/t2t_datagen.py
-
-# In[ ]:
-
-
-# get_ipython().system('t2t-datagen   --data_dir=$DATA_DIR   --tmp_dir=$TMP_DIR   --problem=$PROBLEM   --t2t_usr_dir=$USR_DIR')
-
-
-# ## 2.2. Generate with code
-
-# In[ ]:
 
 ##
 
@@ -126,7 +115,15 @@ t2t_problem.generate_data(DATA_DIR, TMP_DIR)
 
 #注意python console 调用的不是63342端口.
 
+
+
+
 ##
+
+
+
+import warnings
+warnings.filterwarnings("ignore")
 # # 3. Train the model
 # 
 # 
@@ -150,49 +147,11 @@ t2t_problem.generate_data(DATA_DIR, TMP_DIR)
 
 
 train_steps = 300000 # Total number of train steps for all Epochs
-eval_steps = 100 # Number of steps to perform for each evaluation
-batch_size = 4096
+eval_steps = 1 # Number of steps to perform for each evaluation
+batch_size = 100
 save_checkpoints_steps = 1000
 ALPHA = 0.1
 schedule = "continuous_train_and_eval"
-
-
-# You can choose schedule :
-#  
-# 
-# *  train. Bad quality
-# *  continuous_train_and_eval (default)
-# *   train_and_eval
-# 
-# 
-
-# ##3.2. Train with terminal
-# https://github.com/tensorflow/tensor2tensor/blob/master/tensor2tensor/bin/t2t_trainer.py
-# 
-# 
-
-# In[ ]:
-
-#
-
-
-
-#   --worker-gpu = 1, for train on 1 gpu (facultative).
-# 
-# ---
-# 
-# For distributed training see: https://github.com/tensorflow/tensor2tensor/blob/master/docs/distributed_training.md
-# 
-
-# ##3.3. Train with code
-# create_hparams : https://github.com/tensorflow/tensor2tensor/blob/28adf2690c551ef0f570d41bef2019d9c502ec7e/tensor2tensor/utils/hparams_lib.py#L42
-# 
-# ---
-# Change hyper parameters :
-# https://github.com/tensorflow/tensor2tensor/blob/28adf2690c551ef0f570d41bef2019d9c502ec7e/tensor2tensor/models/transformer.py#L1627
-# 
-
-# In[ ]:
 
 
 from tensor2tensor.utils.trainer_lib import create_run_config, create_experiment
@@ -241,7 +200,7 @@ tensorflow_exp_fn = create_experiment(
     ) 
 
 tensorflow_exp_fn.train_and_evaluate()
-
+##
 
 # #4. See the BLEU score
 
@@ -292,7 +251,7 @@ BEAM_SIZE=1
 # ##5.2. Predict with code
 
 # In[ ]:
-
+##
 
 import tensorflow as tf
 
