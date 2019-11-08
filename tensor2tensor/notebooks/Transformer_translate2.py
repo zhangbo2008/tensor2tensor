@@ -44,13 +44,13 @@
 import tensorflow as tf
 import os
 
-DATA_DIR = os.path.expanduser("/t2t/data") # This folder contain the data
-TMP_DIR = os.path.expanduser("/t2t/tmp")
-TRAIN_DIR = os.path.expanduser("/t2t/train") # This folder contain the model
-EXPORT_DIR = os.path.expanduser("/t2t/export") # This folder contain the exported model for production
-TRANSLATIONS_DIR = os.path.expanduser("/t2t/translation") # This folder contain  all translated sequence
-EVENT_DIR = os.path.expanduser("/t2t/event") # Test the BLEU score
-USR_DIR = os.path.expanduser("/t2t/user") # This folder contains our data that we want to add
+DATA_DIR = os.path.expanduser("/data/t2t/data") # This folder contain the data
+TMP_DIR = os.path.expanduser("/data/t2t/tmp")
+TRAIN_DIR = os.path.expanduser("/data/t2t/train") # This folder contain the model
+EXPORT_DIR = os.path.expanduser("/data/t2t/export") # This folder contain the exported model for production
+TRANSLATIONS_DIR = os.path.expanduser("/data/t2t/translation") # This folder contain  all translated sequence
+EVENT_DIR = os.path.expanduser("/data/t2t/event") # Test the BLEU score
+USR_DIR = os.path.expanduser("/data/t2t/user") # This folder contains our data that we want to add
  
 tf.gfile.MakeDirs(DATA_DIR)
 tf.gfile.MakeDirs(TMP_DIR)
